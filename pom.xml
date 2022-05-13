@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.kellerrush.cnacos</groupId>
+    <artifactId>cnacos-all</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+
+    <name>KellerRush CNACOS ${project.version}}</name>
+
+
+    <properties>
+        <revision>1.0.0-SNAPSHOT</revision>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- Compiler settings properties -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- Maven properties -->
+        <maven.test.skip>false</maven.test.skip>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+
+        <!-- plugin version -->
+        <versions-maven-plugin.version>2.2</versions-maven-plugin.version>
+        <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
+
+        <junit-version>4.12</junit-version>
+        <mockito-core-version>2.23.4</mockito-core-version>
+
+        <!-- dependencies version -->
+        <spring-boot-dependencies.version>2.1.17.RELEASE</spring-boot-dependencies.version>
+        <guava.version>30.1-jre</guava.version>
+
+    </properties>
+
+    <!-- 子模块管理 -->
+    <modules>
+        <module>api</module>
+        <module>common</module>
+        <module>client</module>
+        <module>core</module>
+    </modules>
+
+    <!-- 所有的子项目默认依赖 -->
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit-version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito-core-version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!-- 管理依赖版本号，子项目不会默认依赖 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- Import dependency management from Spring Boot -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot-dependencies.version}}</version>
+            </dependency>
+
+            <!-- Internal libs -->
+            <dependency>
+                <groupId>com.kellerrush.cnacos</groupId>
+                <artifactId>cnacos-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kellerrush.cnacos</groupId>
+                <artifactId>cnacos-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- Third-party libs -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+
+
+
+
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <compilerVersion>${maven.compiler.source}</compilerVersion>
+                    <showDeprecation>true</showDeprecation>
+                    <showWarnings>true</showWarnings>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <forkCount>1</forkCount>
+                    <reuseForks>true</reuseForks>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>
