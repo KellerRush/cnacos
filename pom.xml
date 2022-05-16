@@ -35,7 +35,9 @@
 
         <!-- dependencies version -->
         <spring-boot-dependencies.version>2.1.17.RELEASE</spring-boot-dependencies.version>
+        <spring-cloud-commons.version>1.3.5.RELEASE</spring-cloud-commons.version>
         <guava.version>30.1-jre</guava.version>
+
 
     </properties>
 
@@ -45,6 +47,8 @@
         <module>common</module>
         <module>client</module>
         <module>core</module>
+        <module>spring-cloud-kellerrush-cnacos-discovery</module>
+        <module>test-example</module>
     </modules>
 
     <!-- 所有的子项目默认依赖 -->
@@ -70,7 +74,9 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot-dependencies.version}}</version>
+                <version>${spring-boot-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
             <!-- Internal libs -->
@@ -92,6 +98,11 @@
                 <version>${guava.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-commons</artifactId>
+                <version>${spring-cloud-commons.version}</version>
+            </dependency>
 
 
 
