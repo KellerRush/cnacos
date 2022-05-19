@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
- com.kellerrush.cloud.cnacos.NacosDiscoveryClientAutoConfiguration
+ com.kellerrush.cloud.cnacos.MyAutoConfigure
