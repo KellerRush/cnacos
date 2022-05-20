@@ -43,12 +43,7 @@
 
     <!-- 子模块管理 -->
     <modules>
-        <module>api</module>
-        <module>common</module>
-        <module>client</module>
-        <module>core</module>
-        <module>spring-cloud-kellerrush-cnacos-discovery</module>
-        <module>test-example</module>
+
     </modules>
 
     <!-- 所有的子项目默认依赖 -->

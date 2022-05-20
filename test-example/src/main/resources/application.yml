@@ -1,5 +1,0 @@
-plusroax:
-  address:
-    enabled: false  # 开启才生效
-    host: 127.0.0.1
-    port: 8848
