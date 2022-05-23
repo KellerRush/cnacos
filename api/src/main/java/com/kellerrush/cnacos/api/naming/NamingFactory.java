@@ -9,8 +9,8 @@ public class NamingFactory {
     public static NamingService createNamingService(String serverAddr) {
         NamingService vendorImpl = null;
         try {
-            Class<?> driverImplClass = Class.forName("com.kellerrush.cnacos.client.config.CNacosNamingService");
-            Constructor constructor = driverImplClass.getConstructor(Properties.class);
+            Class<?> driverImplClass = Class.forName("com.kellerrush.cnacos.client.naming.CNacosNamingService");
+            Constructor constructor = driverImplClass.getConstructor(String.class);
             vendorImpl = (NamingService) constructor.newInstance("123456");
         } catch (Exception e) {
             e.printStackTrace();

@@ -7,6 +7,10 @@ public class CNacosNamingService implements NamingService {
         System.out.println("初始化客户端-注册中心");
     }
 
+    public void init(){
+
+    }
+
     @Override
     public void register() {
         System.out.println("注册中心成功");
