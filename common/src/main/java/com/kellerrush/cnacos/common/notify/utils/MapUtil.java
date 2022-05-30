@@ -16,8 +16,6 @@
 
 package com.kellerrush.cnacos.common.notify.utils;
 
-import com.kellerrush.cnacos.common.notify.NotThreadSafe;
-
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Map;
@@ -138,7 +136,6 @@ public class MapUtil {
      * @param param2          function's parameter value1.
      * @return
      */
-    @NotThreadSafe
     public static <K, C, V, T> V computeIfAbsent(Map<K, V> target, K key, BiFunction<C, T, V> mappingFunction, C param1,
             T param2) {
         
