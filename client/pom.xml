@@ -18,6 +18,13 @@
             <groupId>com.kellerrush.cnacos</groupId>
             <artifactId>cnacos-api</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.kellerrush.cnacos</groupId>
+            <artifactId>cnacos-common</artifactId>
+        </dependency>
+
+
     </dependencies>
 
     <build>
