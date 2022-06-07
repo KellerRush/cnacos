@@ -18,12 +18,12 @@ public interface Publisher {
     /**
      * 添加订阅
      */
-    void addSubscribe(Subscriber subscriber);
+    void addSubscriber(Subscriber subscriber);
 
     /**
      * 移除订阅
      */
-    void removeSubscribe(Subscriber subscriber);
+    void removeSubscriber(Subscriber subscriber);
 
 
     /**

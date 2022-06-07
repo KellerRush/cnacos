@@ -1,6 +1,7 @@
 package com.kellerrush.cnacos.common.notify.notify;
 
 import com.kellerrush.cnacos.api.exception.runtime.CNacosRuntimeException;
+import com.kellerrush.cnacos.common.notify.notify.listener.Subscriber;
 import com.kellerrush.cnacos.common.notify.utils.ClassUtils;
 import com.kellerrush.cnacos.common.notify.utils.MapUtil;
 
@@ -68,5 +69,23 @@ public class NotifyCenter {
         return publisher.publish(event);
     }
 
+    public static void registerSubscriber(Subscriber consumer){
+        registerSubscriber(consumer, DEFAULT_PUBLISHER_FACTORY);
+    }
+
+
+    public static void registerSubscriber(Subscriber consumer, PublisherFactory factory){
+        Class<? extends Event> subscribeType = consumer.subscribeType();
+        addSubscriber(consumer, subscribeType, factory);
+    }
+
+
+
+    private static void addSubscriber(Subscriber consumer, Class<? extends Event> subscribeType, PublisherFactory factory){
+        final String topic = ClassUtils.getCanonicalName(subscribeType);
+        MapUtil.computeIfAbsent(INSTANCE.publisherMap, topic, factory, subscribeType, 1024);
+        Publisher publisher = INSTANCE.publisherMap.get(topic);
+        publisher.addSubscriber(consumer);
+    }
 
 }

@@ -6,13 +6,17 @@ import com.kellerrush.cnacos.common.notify.utils.ThreadUtils;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executor;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class DefaultPublisher extends Thread implements Publisher {
 
 
     private BlockingQueue<Event> queue;
 
-    private ConcurrentHashSet<Subscriber> subscribers;
+    private ConcurrentHashSet<Subscriber> subscribers = new ConcurrentHashSet<>();
+
+    private AtomicInteger recvCount = new AtomicInteger(0);
 
 
     @Override
@@ -36,35 +40,62 @@ public class DefaultPublisher extends Thread implements Publisher {
             try {
                 Event event = queue.take();
 
-                System.out.println("收到一个事件");
+//                System.out.println("收到一个事件" + queue.size());
+
+                receiveEvent(event);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            ThreadUtils.sleep(1000L);
+        }
+    }
+
+
+    private void receiveEvent(Event event){
+        recvCount.incrementAndGet();
+//        System.out.println("处理接收事件，"+  recvCount.intValue());
+        for (Subscriber subscriber: this.subscribers){
+            notifySubscriber(subscriber, event);
         }
     }
 
 
     @Override
     public boolean publish(Event event) {
-        System.out.println("publish event");
+//        System.out.println("publish event");
+        recvCount.incrementAndGet();
         return this.queue.offer(event);
     }
 
     @Override
-    public void addSubscribe(Subscriber subscriber) {
+    public void addSubscriber(Subscriber subscriber) {
+        this.subscribers.add(subscriber);
         System.out.println("addSubscribe");
     }
 
     @Override
-    public void removeSubscribe(Subscriber subscriber) {
+    public void removeSubscriber(Subscriber subscriber) {
+        this.subscribers.remove(subscriber);
         System.out.println("removeSubscribe");
     }
 
     @Override
     public void notifySubscriber(Subscriber subscriber, Event event) {
-        System.out.println("notifySubscriber");
+//        System.out.println("notifySubscriber");
+
+        Runnable job = () -> subscriber.onEvent(event);
+        Executor executor = subscriber.executor();
+        if(executor != null){
+            executor.execute(job);
+        }else{
+            try {
+                job.run();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+
     }
 
 
